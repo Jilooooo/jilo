@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Happy Birthday Sophia!</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&family=Great+Vibes&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+  <style>
+    :root{
+      --bg1:#fff0f6; --bg2:#ffeef8; --accent:#d63384; --soft:#ffd6e8;
+      --card:#ffffff; --glass: rgba(255,255,255,0.6);
+    }
+    *{box-sizing:border-box;margin:0;padding:0;font-family:Montserrat,Segoe UI,Roboto,'Noto Sans',sans-serif}
+    html,body{height:100%}
+    body{
+      background: radial-gradient(circle at 10% 10%, #fff6fb 0%, var(--bg1) 20%, var(--bg2) 100%);
+      display:flex;align-items:center;justify-content:center;padding:28px;
+    }
+
+    .stage{
+      position:relative;width:100%;max-width:1100px;height:640px;background:linear-gradient(180deg,rgba(255,255,255,0.9),var(--card));border-radius:24px;box-shadow:0 20px 50px rgba(151,65,111,0.18);overflow:hidden;
+    }
+
+    /* header */
+    .topbar{position:absolute;left:24px;top:18px;z-index:40;display:flex;gap:12px;align-items:center}
+    .badge{background:linear-gradient(180deg,var(--accent),#ff80bf);color:white;padding:10px 14px;border-radius:14px;font-weight:700;letter-spacing:.3px}
+    .subtitle{color:#6b375b;font-weight:700}
+
+    /* center card */
+    .card{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:82%;max-width:840px;background:linear-gradient(180deg,rgba(255,255,255,0.95),rgba(255,255,255,0.88));border-radius:18px;padding:28px;box-shadow:0 12px 30px rgba(59,29,55,0.08);z-index:30;display:flex;gap:22px;align-items:center}
+
+    .left{flex:1}
+    .greeting{font-family:'Great Vibes', cursive;font-size:46px;color:var(--accent);line-height:1;margin-bottom:6px}
+    .who{font-size:20px;color:#5b324a;margin-bottom:8px}
+    .date{font-size:13px;color:#8a6786;margin-bottom:12px}
+    .message{background:linear-gradient(180deg,rgba(246,206,236,0.6),rgba(255,255,255,0.4));padding:18px;border-radius:12px;color:#3b243a;font-size:17px;line-height:1.45}
+
+    .right{width:220px;flex:0 0 220px;display:flex;flex-direction:column;gap:12px;align-items:center}
+    .circle{width:140px;height:140px;border-radius:50%;background:linear-gradient(180deg,#fff,#ffeafa);display:flex;align-items:center;justify-content:center;box-shadow:0 8px 22px rgba(181,80,136,0.12);font-size:28px;color:var(--accent);font-weight:800}
+    .controls{display:flex;flex-direction:column;gap:10px;width:100%}
+    button{padding:12px 14px;border-radius:12px;border:0;cursor:pointer;font-weight:700}
+    .play{background:var(--accent);color:white}
+    .surprise{background:linear-gradient(90deg,#ffd6f0,#ffc9e6);color:#6b2e56}
+    .download{background:transparent;border:2px dashed rgba(107,51,83,0.12);color:#6b2e56}
+
+    /* fullscreen balloons */
+    .balloon{position:absolute;bottom:-160px;border-radius:50%;opacity:0.95;z-index:20}
+    .b1{left:6%;width:88px;height:120px;background:linear-gradient(180deg,#ffd1e8,#ff9bcf);animation:rise 9s ease-in infinite}
+    .b2{left:22%;width:64px;height:92px;background:linear-gradient(180deg,#ffe6b8,#ffc9a8);animation:rise 10s ease-in .5s infinite}
+    .b3{left:40%;width:110px;height:140px;background:linear-gradient(180deg,#d6f8ef,#9feadb);animation:rise 8.5s ease-in .3s infinite}
+    .b4{left:62%;width:78px;height:106px;background:linear-gradient(180deg,#e8dcff,#cdb8ff);animation:rise 11s ease-in .2s infinite}
+    .b5{left:82%;width:56px;height:78px;background:linear-gradient(180deg,#fff2bf,#ffd59e);animation:rise 12s ease-in .9s infinite}
+
+    @keyframes rise{0%{transform:translateY(0) rotate(-8deg)}50%{transform:translateY(-72vh) rotate(8deg)}100%{transform:translateY(-148vh) rotate(-8deg)}}
+
+    /* confetti */
+    #confetti{position:absolute;inset:0;pointer-events:none;z-index:25}
+
+    .credits{position:absolute;right:18px;bottom:14px;color:#7f536f;font-size:13px;z-index:40}
+  </style>
+</head>
+<body>
+  <div class="stage" id="stage">
+    <canvas id="confetti"></canvas>
+    <div class="balloon b1"></div>
+    <div class="balloon b2"></div>
+    <div class="balloon b3"></div>
+    <div class="balloon b4"></div>
+    <div class="balloon b5"></div>
+
+    <div class="topbar">
+      <div class="badge">For Sophia</div>
+      <div class="subtitle">November 9, 2025</div>
+    </div>
+
+    <div class="card">
+      <div class="left">
+        <div class="greeting">Happy Birthday!</div>
+        <div class="who">Sophia Simoune Buenaventura</div>
+        <div class="date">November 9, 2025</div>
+        <div class="message" id="message">Happy Birthday, Sophia! May your special day be filled with joy, love, and surprises. Wishing you endless smiles, laughter, and dreams come true! 🎂✨</div>
+      </div>
+
+      <div class="right">
+        <div class="circle">🎂</div>
+        <div class="controls">
+          <button class="play" id="playBtn">Play Song</button>
+          <button class="surprise" id="surpriseBtn">Send Surprise</button>
+          <button class="download" id="downloadBtn">Download as Picture</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="credits">AMON</div>
+  </div>
+
+  <script>
+    // Confetti animation
+    const canvas = document.getElementById('confetti');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+    function resize(){ canvas.width = canvas.offsetWidth; canvas.height = canvas.offsetHeight; }
+    window.addEventListener('resize', resize); resize();
+
+    function rand(min,max){return Math.random()*(max-min)+min}
+    function spawnConfetti(x,y,amount=160){
+      for(let i=0;i<amount;i++){
+        particles.push({x:x||rand(canvas.width*0.2,canvas.width*0.8),y:y||canvas.height*0.6,vx:rand(-9,9),vy:rand(-14,4),size:rand(6,14),color:`hsl(${~~rand(300,350)},80%,65%)`,rot:rand(0,6.28),rotSpeed:rand(-0.2,0.2),life:rand(80,220)});
+      }
+    }
+
+    function update(){
+      ctx.clearRect(0,0,canvas.width,canvas.height);
+      for(let i=particles.length-1;i>=0;i--){
+        const p=particles[i]; p.x+=p.vx; p.y+=p.vy; p.vy+=0.25; p.rot+=p.rotSpeed; p.life--;
+        ctx.save(); ctx.translate(p.x,p.y); ctx.rotate(p.rot);
+        ctx.fillStyle=p.color; ctx.fillRect(-p.size/2,-p.size/2,p.size,p.size*0.6);
+        ctx.restore();
+        if(p.y>canvas.height+80 || p.x<-80 || p.x>canvas.width+80 || p.life<=0) particles.splice(i,1);
+      }
+      requestAnimationFrame(update);
+    }
+    update();
+
+    // WebAudio Happy Birthday melody
+    let audioCtx = null;
+    function ensureAudio(){ if(!audioCtx) audioCtx = new (window.AudioContext||window.webkitAudioContext)(); }
+    function playTone(freq, duration, startTime){
+      const o = audioCtx.createOscillator(); const g = audioCtx.createGain();
+      o.type='sine'; o.frequency.value = freq; g.gain.value = 0.0001;
+      o.connect(g); g.connect(audioCtx.destination);
+      g.gain.exponentialRampToValueAtTime(0.08, audioCtx.currentTime + 0.02 + startTime);
+      o.start(audioCtx.currentTime + startTime); o.stop(audioCtx.currentTime + startTime + duration);
+    }
+
+    const notes = { C4:261.63, D4:293.66, E4:329.63, F4:349.23, G4:392.00, A4:440.00, B4:493.88, C5:523.25, D5:587.33, E5:659.25, F5:698.46, G5:783.99 };
+    const seq = [
+      [notes.G4,0.35],[notes.G4,0.35],[notes.A4,0.7],[notes.G4,0.7],[notes.C5,0.7],[notes.B4,1.4],
+      [notes.G4,0.35],[notes.G4,0.35],[notes.A4,0.7],[notes.G4,0.7],[notes.D5,0.7],[notes.C5,1.4],
+      [notes.G4,0.35],[notes.G4,0.35],[notes.G5,0.7],[notes.E5,0.7],[notes.C5,0.7],[notes.B4,0.7],[notes.A4,0.7],
+      [notes.F5,0.35],[notes.F5,0.35],[notes.E5,0.7],[notes.C5,0.7],[notes.D5,0.7],[notes.C5,1.4]
+    ];
+
+    function playSequence(){
+      ensureAudio(); if(audioCtx.state === 'suspended') audioCtx.resume();
+      let t = 0;
+      for(const [f,d] of seq){ playTone(f,d,t); t += d; }
+    }
+
+    // Controls
+    const playBtn = document.getElementById('playBtn');
+    const surpriseBtn = document.getElementById('surpriseBtn');
+    const downloadBtn = document.getElementById('downloadBtn');
+    const stage = document.getElementById('stage');
+
+    playBtn.addEventListener('click', ()=>{ playSequence(); });
+
+    surpriseBtn.addEventListener('click', ()=>{
+      spawnConfetti(undefined, undefined, 220);
+      ensureAudio(); if(audioCtx.state === 'suspended') audioCtx.resume();
+      playTone(notes.C5,0.14,0); playTone(notes.E5,0.14,0.16); playTone(notes.G5,0.2,0.32);
+      setTimeout(()=>{ alert('You sent a surprise to Sophia! 🎉'); },350);
+    });
+
+    // Download stage as PNG using html2canvas
+    downloadBtn.addEventListener('click', ()=>{
+      html2canvas(stage).then(canvas => {
+        const link = document.createElement('a');
+        link.download = 'HappyBirthday_Sophia.png';
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+      });
+    });
+  </script>
+</body>
+</html>
